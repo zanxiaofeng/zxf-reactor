@@ -9,8 +9,10 @@ public class FluxTests {
 
     public static void flux_case_1() throws InterruptedException {
         Flux<Integer> flux = Flux.just(1, 2, 3, 4);
-        flux.map(x -> x * x).subscribe(x -> System.out.println("*" + x));
+        Flux<Integer> flux1 = flux.map(x -> x * x);
+        flux1.subscribe(x -> System.out.println("*" + x));
         Thread.sleep(4000);
-        flux.map(x -> x + x).subscribe(x -> System.out.println("+" + x));
+        Flux<Integer> flux2 = flux.map(x -> x + x);
+        flux2.subscribe(x -> System.out.println("+" + x));
     }
 }
