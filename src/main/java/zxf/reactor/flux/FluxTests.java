@@ -1,4 +1,4 @@
-package zxf.reactor;
+package zxf.reactor.flux;
 
 import reactor.core.publisher.Flux;
 
