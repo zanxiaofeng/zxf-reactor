@@ -6,12 +6,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class FluxTests {
     public static void main(String[] args) {
-        case_1();
-        case_2();
-        case_3();
-    }
-
-    private static void case_1() {
         System.out.println("case 1: onNext|onNext|onComplete");
         Flux.just(1, 2).subscribe(x -> {
             System.out.println("onNext: " + x);
@@ -20,9 +14,7 @@ public class FluxTests {
         }, () -> {
             System.out.println("onComplete: case 1");
         });
-    }
 
-    private static void case_2() {
         System.out.println("case 2: onComplete");
         Flux.empty().subscribe(x -> {
             System.out.println("onNext: will not be touched");
@@ -31,9 +23,7 @@ public class FluxTests {
         }, () -> {
             System.out.println("onComplete: case 2");
         });
-    }
 
-    private static void case_3() {
         System.out.println("case 3: onNext|onNext|onError");
         AtomicInteger initial = new AtomicInteger();
         Flux.generate(synchronousSink -> {
