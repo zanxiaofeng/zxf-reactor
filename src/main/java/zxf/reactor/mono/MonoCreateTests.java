@@ -47,7 +47,7 @@ public class MonoCreateTests {
         subscribe("Mono.fromFuture", Mono.fromFuture(CompletableFuture.completedFuture("I'm from Mono.fromFuture")));
 
 
-        System.out.println("************By Publisher************");
+        System.out.println("************By Publisher(Include Mono, Flux)************");
         subscribe("Mono.from", Mono.from(new Publisher<String>() {
             @Override
             public void subscribe(Subscriber<? super String> subscriber) {
