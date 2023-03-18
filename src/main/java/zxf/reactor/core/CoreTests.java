@@ -20,6 +20,7 @@ public class CoreTests {
                     @Override
                     public void request(long l) {
                         subscriber.onNext(current);
+                        subscriber.onComplete();
                     }
 
                     @Override
