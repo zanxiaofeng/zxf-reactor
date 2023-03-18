@@ -1,5 +1,6 @@
 package zxf.reactor.core;
 
+import org.reactivestreams.Processor;
 import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
@@ -29,15 +30,56 @@ public class CoreTests {
             }
         };
 
-        Subscriber<Integer> subscriber = new Subscriber<Integer>() {
+        Processor<Integer, String> processor = new Processor<Integer, String>() {
+            private Subscription subscription;
+            private Subscriber<? super String> subscriber;
+
+            @Override
+            public void subscribe(Subscriber<? super String> subscriber) {
+                this.subscriber = subscriber;
+                subscriber.onSubscribe(new Subscription() {
+                    @Override
+                    public void request(long l) {
+                        subscription.request(l);
+                    }
+
+                    @Override
+                    public void cancel() {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onSubscribe(Subscription subscription) {
+                this.subscription = subscription;
+            }
+
+            @Override
+            public void onNext(Integer integer) {
+                subscriber.onNext(integer + "-" + integer);
+            }
+
+            @Override
+            public void onError(Throwable error) {
+                subscriber.onError(error);
+            }
+
+            @Override
+            public void onComplete() {
+                subscriber.onComplete();
+            }
+        };
+
+        Subscriber<String> subscriber = new Subscriber<String>() {
             @Override
             public void onSubscribe(Subscription subscription) {
                 subscription.request(1000);
             }
 
             @Override
-            public void onNext(Integer integer) {
-                System.out.println("onNext::" + integer + ".");
+            public void onNext(String next) {
+                System.out.println("onNext::" + next + ".");
             }
 
             @Override
@@ -51,10 +93,7 @@ public class CoreTests {
             }
         };
 
-        publisher.subscribe(subscriber);
-        publisher.subscribe(subscriber);
-        publisher.subscribe(subscriber);
-        publisher.subscribe(subscriber);
-        publisher.subscribe(subscriber);
+        publisher.subscribe(processor);
+        processor.subscribe(subscriber);
     }
 }
