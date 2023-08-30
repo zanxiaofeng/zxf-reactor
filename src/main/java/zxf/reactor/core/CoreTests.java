@@ -16,7 +16,7 @@ public class CoreTests {
     private static AtomicInteger atomicInteger = new AtomicInteger();
 
     public static void main(String[] args) {
-        MyPublisher<Integer> myPublisher = new MyPublisher(20, atomicInteger::incrementAndGet);
+        MyPublisher<Integer> myPublisher = new MyPublisher(atomicInteger::incrementAndGet);
 
         MyFilterProcessor<Integer> myFilterProcessor = new MyFilterProcessor<>(myPublisher, x -> x % 2 == 0);
 
@@ -31,55 +31,45 @@ public class CoreTests {
     }
 
     public static class MyPublisher<T> implements Publisher<T> {
-        private Integer limit;
         private Supplier<T> supplier;
 
-        public MyPublisher(Integer limit, Supplier<T> supplier) {
+        public MyPublisher(Supplier<T> supplier) {
             System.out.println(Thread.currentThread() + "  MyPublisher::cotr");
-            this.limit = limit;
             this.supplier = supplier;
         }
 
         @Override
         public void subscribe(Subscriber<? super T> subscriber) {
-            System.out.println(Thread.currentThread() + "  MyPublisher::subscribe." + limit);
-            subscriber.onSubscribe(new MySubscription(limit, supplier, subscriber));
+            System.out.println(Thread.currentThread() + "  MyPublisher::subscribe");
+            subscriber.onSubscribe(new MySubscription(supplier, subscriber));
         }
     }
 
     public static class MySubscription<T> implements Subscription {
-        private Integer limit;
         private Supplier<T> supplier;
         ;
         private Subscriber<? super T> subscriber;
 
-        public MySubscription(Integer limit, Supplier<T> supplier, Subscriber<? super T> subscriber) {
+        public MySubscription(Supplier<T> supplier, Subscriber<? super T> subscriber) {
             System.out.println(Thread.currentThread() + "  MySubscription::cotr");
-            this.limit = limit;
             this.supplier = supplier;
             this.subscriber = subscriber;
         }
 
         @Override
         public void request(long count) {
-            System.out.println(Thread.currentThread() + "  MySubscription::request." + limit);
-            if (limit <= 0){
-                return;
-            }
+            System.out.println(Thread.currentThread() + "  MySubscription::request." + count);
 
             for (int i = 0; i < count; i++) {
-                limit--;
                 subscriber.onNext(supplier.get());
             }
 
-            if (limit <= 0) {
-                subscriber.onComplete();
-            }
+            subscriber.onComplete();
         }
 
         @Override
         public void cancel() {
-            System.out.println(Thread.currentThread() + "  MySubscription::cancel." + limit);
+            System.out.println(Thread.currentThread() + "  MySubscription::cancel");
             subscriber.onComplete();
         }
     }
@@ -176,7 +166,6 @@ public class CoreTests {
 
     public static class MySubscriber<T> implements Subscriber<T> {
         private Consumer<T> consumer;
-        private Subscription subscription;
 
         public MySubscriber(Consumer<T> consumer) {
             System.out.println(Thread.currentThread() + "  MySubscriber::cotr");
@@ -186,7 +175,6 @@ public class CoreTests {
         @Override
         public void onSubscribe(Subscription subscription) {
             System.out.println(Thread.currentThread() + "  MySubscriber::onSubscribe");
-            this.subscription = subscription;
             subscription.request(100);
         }
 
@@ -194,6 +182,7 @@ public class CoreTests {
         public void onNext(T value) {
             System.out.println(Thread.currentThread() + "  MySubscriber::onNext." + value);
             this.consumer.accept(value);
+            //注意：在此处Call subscription.request(100) 会导致循环调用
         }
 
         @Override
