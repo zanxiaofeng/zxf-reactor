@@ -5,13 +5,23 @@ import reactor.core.publisher.Mono;
 public class MonoTests {
     public static void main(String[] args) {
         System.out.println("case 1: onNext|onComplete");
-        Mono.just("test").subscribe(x -> {
-            System.out.println("onNext: " + x + ".");
+
+        Mono<String> just = Mono.just("test");
+        just.subscribe(x -> {
+            System.out.println("onNext-1: " + x + ".");
         }, e -> {
-            System.out.println("onError: will not be touched.");
+            System.out.println("onError-1: will not be touched.");
         }, () -> {
-            System.out.println("onComplete: case 1.");
+            System.out.println("onComplete-1: case 1.");
         });
+        just.subscribe(x -> {
+            System.out.println("onNext-2: " + x + ".");
+        }, e -> {
+            System.out.println("onError-2: will not be touched.");
+        }, () -> {
+            System.out.println("onComplete-2: case 1.");
+        });
+        System.out.println("case 1: " + just.block());
 
         System.out.println("case 2: onComplete");
         Mono.empty().subscribe(x -> {
