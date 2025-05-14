@@ -4,7 +4,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.UUID;
 
-public class MonoTests {
+public class MonoTests1 {
     public static void main(String[] args) {
         System.out.println("case 1: onNext|onComplete");
 
