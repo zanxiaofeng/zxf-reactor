@@ -5,7 +5,6 @@ import reactor.core.publisher.Flux;
 import reactor.test.StepVerifier;
 
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class FluxTests {
     Flux<Integer> evenNumbers = Flux.range(2, 2).filter(x -> x % 2 == 0);
