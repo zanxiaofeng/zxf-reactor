@@ -43,6 +43,11 @@
 - Mono<T> doOnError(Consumer<? super Throwable> onError)
 - Mono<T> doOnComplete(Runnable onComplete)
 - Mono<T> doOn******(****)
+### Trigger
+- void subscribe(Subscriber<? super T> actual)
+- Disposable subscribe(@Nullable Consumer<? super T> consumer, @Nullable Consumer<? super Throwable> errorConsumer, @Nullable Runnable completeConsumer)
+- Disposable subscribe()
+- T block()
 
 ## Flux
 ### Flux 与 Value
@@ -61,3 +66,9 @@
 - Flux<T> doOnError(Consumer<? super Throwable> onError)
 - Flux<T> doOnComplete(Runnable onComplete)
 - Flux<T> doOn******(****)
+### Trigger
+- void subscribe(Subscriber<? super T> actual)
+- Disposable subscribe(@Nullable Consumer<? super T> consumer, @Nullable Consumer<? super Throwable> errorConsumer, @Nullable Runnable completeConsumer)
+- Disposable subscribe()
+- T blockLast()
+- T blockFirst()
