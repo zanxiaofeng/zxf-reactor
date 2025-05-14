@@ -38,6 +38,11 @@
 - ```从 Function 到 Mono```
 ### Mono 与 Flux
 - ```从 Ｍono 到 Ｆlux```
+### Observability
+- Mono<T> doOnNext(Consumer<? super T> onNext)
+- Mono<T> doOnError(Consumer<? super Throwable> onError)
+- Mono<T> doOnComplete(Runnable onComplete)
+- Mono<T> doOn******(****)
 
 ## Flux
 ### Flux 与 Value
@@ -51,9 +56,8 @@
 - ```从 Function 到 Flux```
 ### Flux 与 Mono
 - ```从 Flux 到 Ｍono```
-
-##  Observability
-- doOnNext
-- doOnError
-- doOnComplete
-- doOn******
+###  Observability
+- Flux<T> doOnNext(Consumer<? super T> onNext)
+- Flux<T> doOnError(Consumer<? super Throwable> onError)
+- Flux<T> doOnComplete(Runnable onComplete)
+- Flux<T> doOn******(****)
