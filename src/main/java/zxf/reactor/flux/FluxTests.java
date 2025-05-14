@@ -8,14 +8,15 @@ public class FluxTests {
     public static void main(String[] args) {
         System.out.println("case 1: onNext|onNext|onComplete");
         Flux.just(1, 2).subscribe(x -> {
-            System.out.println("onNext: " + x);
+            System.out.println("onNext-2: " + x);
         }, e -> {
-            System.out.println("onError: will not be touched");
+            System.out.println("onError-2: will not be touched");
         }, () -> {
-            System.out.println("onComplete: case 1");
+            System.out.println("onComplete-2: case 1");
         });
 
-        System.out.println("case 2: onComplete");
+
+        System.out.println("\ncase 2: onComplete");
         Flux.empty().subscribe(x -> {
             System.out.println("onNext: will not be touched");
         }, e -> {
@@ -24,7 +25,8 @@ public class FluxTests {
             System.out.println("onComplete: case 2");
         });
 
-        System.out.println("case 3: onNext|onNext|onError");
+
+        System.out.println("\ncase 3: onNext|onNext|onError");
         AtomicInteger initial = new AtomicInteger();
         Flux.generate(synchronousSink -> {
             Integer current = initial.incrementAndGet();
