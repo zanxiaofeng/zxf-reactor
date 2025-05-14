@@ -35,10 +35,12 @@ public class MonoTests {
         });
 
         System.out.println("\ncase 4: publish multiple times.");
-        Mono<String> mono = Mono.fromCallable(() -> UUID.randomUUID().toString()).doOnSuccess((x) -> {
-            System.out.println("onNext: " + x + ".");
-        });
-
+        Mono<String> mono = Mono.fromCallable(() -> UUID.randomUUID().toString())
+                .doOnSuccess((x) -> {
+                    System.out.println("doOnSuccess: " + x + ".");
+                }).doOnNext(x -> {
+                    System.out.println("doOnNext: " + x + ".");
+                });
         mono.subscribe(x -> {
             System.out.println("onNext-1: " + x + ".");
         }, e -> {

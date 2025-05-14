@@ -38,7 +38,7 @@
 - ```从 Function 到 Mono```
 ### Mono 与 Flux
 - ```从 Ｍono 到 Ｆlux```
-- 
+
 ## Flux
 ### Flux 与 Value
 - ```从 Value 到 Ｆlux```
@@ -51,3 +51,9 @@
 - ```从 Function 到 Flux```
 ### Flux 与 Mono
 - ```从 Flux 到 Ｍono```
+
+##  Observability
+- doOnNext
+- doOnError
+- doOnComplete
+- doOn******
