@@ -83,3 +83,7 @@
 - org.springframework.http.client.reactive.JdkClientHttpConnector
 - org.springframework.http.client.reactive.ClientHttpResponse
 - org.springframework.http.client.reactive.ClientHttpRequest
+
+
+# SSL Context Kick Start
+- https://sslcontext-kickstart.com/usage.html

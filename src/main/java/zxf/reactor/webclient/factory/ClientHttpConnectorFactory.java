@@ -12,6 +12,7 @@ import java.net.URI;
 public class ClientHttpConnectorFactory {
     public static JettyClientHttpConnector jettyClientHttpConnector(){
         SslContextFactory.Client sslContextFactory = new SslContextFactory.Client();
+
         HttpClient httpClient = new HttpClient(sslContextFactory) {
             @Override
             public Request newRequest(URI uri) {
