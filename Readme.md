@@ -86,4 +86,4 @@
 
 
 # SSL Context Kick Start
-- https://sslcontext-kickstart.com/usage.html
+- https://sslcontext-kickstart.com/index.html
