@@ -72,3 +72,14 @@
 - Disposable subscribe()
 - T blockLast()
 - T blockFirst()
+
+
+# Core Class of Web Client
+- org.springframework.http.client.reactive.ClientHttpConnector
+- org.springframework.http.client.reactive.HttpComponentsClientHttpConnector
+- org.springframework.http.client.reactive.JettyClientHttpConnector
+- org.springframework.http.client.reactive.ReactorClientHttpConnector
+- org.springframework.http.client.reactive.ReactorNetty2ClientHttpConnector
+- org.springframework.http.client.reactive.JdkClientHttpConnector
+- org.springframework.http.client.reactive.ClientHttpResponse
+- org.springframework.http.client.reactive.ClientHttpRequest
