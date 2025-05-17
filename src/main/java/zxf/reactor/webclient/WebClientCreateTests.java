@@ -14,6 +14,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import org.eclipse.jetty.client.HttpClient;
+import zxf.reactor.webclient.factory.ClientHttpConnectorFactory;
 
 import java.net.URI;
 import java.util.Map;
@@ -40,52 +41,10 @@ public class WebClientCreateTests {
 //                .subscribe();
 
 
-        SslContextFactory.Client sslContextFactory = new SslContextFactory.Client();
-        HttpClient httpClient = new HttpClient(sslContextFactory) {
-            @Override
-            public Request newRequest(URI uri) {
-                Request request = super.newRequest(uri);
-                return enhance(request);
-            }
 
-            private Request enhance(Request request) {
-                StringBuilder group = new StringBuilder();
-                request.onRequestBegin(theRequest -> {
-                    // append request url and method to group
-                });
-                request.onRequestHeaders(theRequest -> {
-                    for (HttpField header : theRequest.getHeaders()) {
-                        // append request headers to group
-                    }
-                });
-                request.onRequestContent((theRequest, content) -> {
-                    // append content to group
-                });
-                request.onRequestSuccess(theRequest -> {
-                    //log.debug(group.toString());
-                    group.delete(0, group.length());
-                });
-                group.append("\n");
-                request.onResponseBegin(theResponse -> {
-                    // append response status to group
-                });
-                request.onResponseHeaders(theResponse -> {
-                    for (HttpField header : theResponse.getHeaders()) {
-                        // append response headers to group
-                    }
-                });
-                request.onResponseContent((theResponse, content) -> {
-                    // append content to group
-                });
-                request.onResponseSuccess(theResponse -> {
-                    //log.debug(group.toString());
-                });
-                return request;
-            }
-        };
 
         WebClient webClient3 = WebClient.builder().baseUrl("https://www.163.com?project={project}")
-                //.clientConnector(new JettyClientHttpConnector(httpClient))
+                .clientConnector(ClientHttpConnectorFactory.jettyClientHttpConnector())
                 .filter(ExchangeFilterFunction.ofRequestProcessor((reqest)->{
                     System.out.println("URL: " + reqest.url());
                     System.out.println("Method: " + reqest.method());

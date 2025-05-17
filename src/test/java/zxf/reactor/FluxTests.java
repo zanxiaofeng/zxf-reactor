@@ -35,6 +35,8 @@ public class FluxTests {
 
     @Test
     public void givenFluxes_whenMergeIsInvoked_thenMerge() {
+        Flux.range(1, 5).collect(Collectors.toList()).
+
         Flux<Integer> fluxOfIntegers = Flux.merge(
                 evenNumbers,
                 oddNumbers);
